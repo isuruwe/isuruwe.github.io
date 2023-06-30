@@ -2,6 +2,11 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
+
 
 require('./vendor/autoload.php');
 require 'mailingvariables.php';
@@ -10,14 +15,14 @@ function mailfunction($mail_reciever_email, $mail_reciever_name, $mail_msg, $att
 
     $mail = new PHPMailer();
     $mail->isSMTP();
-
+    $mail->Mailer = "smtp";
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-
+    
     $mail->Host = $GLOBALS['mail_host'];
 
     $mail->Port = $GLOBALS['mail_port'];
 
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
     $mail->SMTPAuth = true;
     $mail->SMTPDebug  = 1;  
@@ -39,16 +44,17 @@ function mailfunction($mail_reciever_email, $mail_reciever_name, $mail_msg, $att
     $mail->msgHTML($mail_msg);
 
 
-    if($attachment !== false){
-        $mail->AddAttachment($attachment);
-    }
+    //if($attachment !== false){
+    //    $mail->AddAttachment($attachment);
+   //}
     
     $mail->AltBody = 'This is a plain-text message body';
  
     if (!$mail->send()) {
-        return false;
+        echo "Error while sending Email.";
+  var_dump($mail);
     } else {
-        return true;
+        echo "Email sent successfully";
     }
 }
 
