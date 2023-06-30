@@ -20,6 +20,9 @@ function mailfunction($mail_reciever_email, $mail_reciever_name, $mail_msg, $att
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
     $mail->SMTPAuth = true;
+    $mail->SMTPDebug  = 1;  
+
+    $mail->SMTPSecure = "tls";
 
     $mail->Username = $GLOBALS['mail_sender_email'];
 
